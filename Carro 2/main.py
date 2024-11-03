@@ -130,16 +130,20 @@ def display():
 
         target_degree = robot_julia["looking_at"]
 
+        opera.translation((robot_julia["pos"][1] - 1) * scale,(robot_julia["pos"][0] - 1 ) * scale)
         r.setColor(1,1,1)
         if abs(target_degree - r.deg) > 0:
             r.girar(target_degree)
 
             while(abs(target_degree - r.deg) > 0):
+                print("nose")
+                print("target_degree: ", target_degree)
+                print("r.deg: ", r.deg)
                 opera.push()
                 r.render()
                 opera.pop()
 
-        opera.translation((robot_julia["pos"][1] - 1) * scale,(robot_julia["pos"][0] - 1 ) * scale)
+
         # if (robot_julia["found_box"] == True):
             # y_pos = 1
 
@@ -193,7 +197,11 @@ def display():
     if(datos["agents"][ultimo_index]["cantidad_cajas"] == cantidad_de_cajas):
         print("Se han recolectado todas las cajas")
         print("Se ha terminado la simulacion")
-        print(datos["agents"][ultimo_index]["movimientos_robots"])
+        movimietnos_totales = 0
+        #se itera por cada robot y se obtiene su movimiento
+        for i in range(5):
+            movimietnos_totales += datos["agents"][i]["movimientos"]
+        print("Movimientos totales: ", movimietnos_totales)
         exit(0)
 
 

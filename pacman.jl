@@ -20,6 +20,8 @@ using CairoMakie
 
     #Past postiion para poder ir a dejar la caja y regresar a la posición anterior
     past_position::Vector{Int} = [-1, -1]
+    #movientos de robot
+    movimientos::Int = 0
 end
 
 @agent struct Box(GridAgent{2})
@@ -29,7 +31,6 @@ end
 @agent struct Estante(GridAgent{2})
     type::String = "Estante"
     cantidad_cajas::Int = 0
-    movimientos_robots::Int = 0
 end
 
 function agent_step!(agent::Box, model)
@@ -51,7 +52,7 @@ function agent_step!(agent::Robot, model)
         end
     end
 
-    model[estante_id].movimientos_robots += 1
+    agent.movimientos += 1
 
     if agent.found_box > 0
 

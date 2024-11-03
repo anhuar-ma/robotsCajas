@@ -35,16 +35,20 @@ class Robot:
         # Calcular la diferencia angular más corta
 
         diff = (self.target_deg - self.deg + 180) % 360 - 180
-
+        print("self.deg", self.deg)
+        print(diff)
         # if(self.target_deg > self.deg):
         if abs(diff) > 0:  # Solo actualizamos si hay una diferencia
-            self.deltadeg = 9 if diff > 0 else -9  # Determinar la dirección
+            self.deltadeg = 10 if diff > 0 else -10  # Determinar la dirección
             self.deg += self.deltadeg
 
             # Asegurar que deg siempre esté en el rango [0, 360)
             self.deg = self.deg % 360
 
             # print("grados: ", self.deg)
+        if self.deg == self.target_deg:
+            print("Llegamos al target")
+            # self.target_deg = 0
 
     def render(self):
         self.opera.push()
