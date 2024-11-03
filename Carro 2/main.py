@@ -19,7 +19,7 @@ URL_BASE = "http://localhost:8000"
 r = requests.post(URL_BASE+ "/simulations", allow_redirects=False)
 datos = r.json()
 # datos se vuelve una lista con los datos de nuestros robots
-print(datos)
+# print(datos)
 LOCATION = datos["Location"]
 # initialX = datos["agents"][0]["pos"][0]
 # initialY = datos["agents"][0]["pos"][1]
@@ -136,9 +136,9 @@ def display():
             r.girar(target_degree)
 
             while(abs(target_degree - r.deg) > 0):
-                print("nose")
-                print("target_degree: ", target_degree)
-                print("r.deg: ", r.deg)
+                # print("nose")
+                # print("target_degree: ", target_degree)
+                # print("r.deg: ", r.deg)
                 opera.push()
                 r.render()
                 opera.pop()
@@ -180,7 +180,7 @@ def display():
     ultimo_index = len(datos["agents"]) - 1
 
     pos_caja_x = 0
-    print("Cantidad de cajas: ", datos["agents"][ultimo_index]["cantidad_cajas"])
+    # print("Cantidad de cajas: ", datos["agents"][ultimo_index]["cantidad_cajas"])
     for i in range (datos["agents"][ultimo_index]["cantidad_cajas"]):
         if(i % 5 == 0 and i > 0):
             pos_caja_x += 3
@@ -197,11 +197,21 @@ def display():
     if(datos["agents"][ultimo_index]["cantidad_cajas"] == cantidad_de_cajas):
         print("Se han recolectado todas las cajas")
         print("Se ha terminado la simulacion")
-        movimietnos_totales = 0
+        movimientos_totales = []
+        movimientos = []
         #se itera por cada robot y se obtiene su movimiento
         for i in range(5):
-            movimietnos_totales += datos["agents"][i]["movimientos"]
-        print("Movimientos totales: ", movimietnos_totales)
+            movimientos.append( datos["agents"][i]["movimientos"])
+
+        mean = sum(movimientos) / len(movimientos)
+
+        variance = sum(((x - mean) ** 2) for x in movimientos) / len(movimientos)
+        std_dev = math.sqrt(variance)
+
+        print("Movimientos totales: ", sum(movimientos))
+        print("Movimientos promedio: ", mean)
+        print("Desviacion estandar: ", std_dev)
+
         exit(0)
 
 
@@ -211,7 +221,6 @@ def display():
     # degrot = (degrot + deltaDeg) % 360
 
     # robots[0].opera.push()
-    print(len(robots))
 
 
 
